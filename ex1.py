@@ -3,7 +3,7 @@ import PySimpleGUI as sg
 import turtle as tt 
 
 layout = [[sg.Canvas(size=(500, 500), background_color='white', key='canvas'),],      
-                 [sg.InputText(key='command')],      
+                 [sg.Multiline(size=(50, 5), key='command')],      
                  [sg.Button("运行"), sg.Button("退出")]]      
 
 window = sg.Window('Window Title').Layout(layout).Finalize()    
