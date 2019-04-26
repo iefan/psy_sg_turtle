@@ -4,15 +4,39 @@ import turtle as tt
 import tkinter.font
 from tkinter import filedialog
 
-layout = [[sg.Canvas(size=(500, 500), background_color='white', key='canvas'),sg.Multiline(size=(100//7, 20//7), key='history', font=('Helvetica', 12))],      
-                 [sg.InputText(focus=True,do_not_clear=False, size=(540//10, 20//7), key='command', font=('Helvetica', 16)),], 
-                 [sg.Button("运行", font=('Helvetica', 16)), sg.Button("退出", font=('Helvetica', 16)), sg.T(" "*92), sg.Button("执行文件", font=('Helvetica', 16))]]      
+layout = [[sg.Canvas(size=(500, 500), background_color='white', key='canvas'),sg.Multiline(size=(100//7, 20//7), key='history', font=('宋体', 12))],      
+                 [sg.InputText(focus=True,do_not_clear=False, size=(510//10, 20//7), key='command', font=('宋体', 16)),], 
+                 [sg.Button("运行", font=('宋体', 16)), sg.Button("退出", font=('宋体', 16)), sg.T(" "*96), sg.Button("执行文件", font=('宋体', 16))]]      
 
 window = sg.Window('小海龟绘图').Layout(layout).Finalize()    
 
+historywindow = window.FindElement('history').TKText
+def doubleClickSelToCommand(event):
+    # actual_callback(event) # this will select the word
+    w = historywindow.selection_get()
+    window.FindElement('command').Update(w)
+    print(w)
+historywindow.bind("<Double-Button-1>", lambda e: historywindow.after(2, doubleClickSelToCommand, e)) # wait 2 ms before running callback
+
+
+commandwindow = window.FindElement('command').TKEntry
+def enterKeyRun(event):
+    tmpcmd = commandwindow.get().strip()
+    if tmpcmd != "":
+        try:
+            tmpcmd = "t." + tmpcmd
+            eval(tmpcmd)
+            # print(1)
+        except:
+            pass
+            # sg.MsgBox("不可识别的!")
+        commandwindow.delete(0, 'end')
+commandwindow.bind('<Return>',enterKeyRun)
+
 # charpixels = tkinter.font.Font().measure('A')
 window.FindElement('history').Update("命令历史:")
-window.FindElement('history').Update(disabled=True)  
+window.FindElement('history').Update(disabled=True)
+
 
 canvas = window.FindElement('canvas').TKCanvas
 t = tt.RawTurtle(canvas)
@@ -23,7 +47,7 @@ t.fd(100)
 
 while True:
     event, values = window.Read()
-    print(values)
+    print(event, '===', values)
     if event is None or event == "退出":
         break
     if event is '运行':
