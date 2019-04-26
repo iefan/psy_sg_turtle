@@ -1,4 +1,15 @@
-for i in range(5):
-    print(i)
+t.clear()
+t.pd()
 
+for i in range(4):
+    t.lt(90)
+    t.fd(100)
+
+t.pu()
 t.fd(100)
+
+t.pd()
+
+for i in range(4):
+    t.lt(90)
+    t.fd(100)
