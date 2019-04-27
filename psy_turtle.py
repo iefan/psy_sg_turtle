@@ -50,10 +50,10 @@ window.FindElement('_history_').Update(disabled=True)
 
 canvas = window.FindElement('_canvas_').TKCanvas
 t = tt.RawTurtle(canvas)
-t.pencolor("#ff0000") # Red
+t.pencolor("#0000ff") # Red
 
-t.pendown() # Regarding one of the comments
-t.fd(100)
+# t.pendown() # Regarding one of the comments
+# t.fd(100)
 
 while True:
     event, values = window.Read()
@@ -95,7 +95,7 @@ while True:
         else:
             with open(file_name) as f:
                 strcmd += f.read()
-            print(strcmd)
+            # print(strcmd)
             exec(strcmd, {}, {'t':t})
         # print(t, type(t))
         # exec("print(t, type(t),'==')", {}, {"t":t})
