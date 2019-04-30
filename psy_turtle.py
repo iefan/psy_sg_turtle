@@ -8,11 +8,14 @@ import tkinter
 
 # menuHistory = ["导出menu", ["导出",]]
 layout = [[sg.Canvas(size=(500, 500), background_color='white', key='_canvas_'),\
-            sg.Listbox(values=["命令历史："], size=(15, 25), key='_history_', font=('宋体', 12), bind_return_key=True,)],
-                 [sg.InputText(focus=True, size=(510//10, 20//7), key='_command_', font=('宋体', 16)),], 
-                 [sg.Button("运行", font=('宋体', 16)), sg.Button("退出", font=('宋体', 16)), sg.T(" "*96), sg.Button("执行文件", font=('宋体', 16))]]      
+            sg.Listbox(values=["命令历史："], size=(15, 25), key='_history_', bind_return_key=True,)],
+                 [sg.InputText(focus=True, size=(67, 3), key='_command_',),], 
+                 [sg.Button("运行",), sg.Button("退出",), sg.T(" "*86), sg.Button("执行文件",)],
+                 [sg.Text("__"*43)],
+                 [sg.Text("运行状态显示～～～",size=(60, 3), font=('宋体', 10), key="_status_")],
+                 ]      
 
-window = sg.Window('小海龟绘图', return_keyboard_events=True).Layout(layout).Finalize()    
+window = sg.Window('小海龟绘图', return_keyboard_events=True, font=('宋体', 12)).Layout(layout).Finalize()    
 
 #================= 绑定doubleclick =================================
 # historywindow = window.FindElement('_history_').TKText
@@ -68,13 +71,19 @@ while True:
         tmpcmd = values["_command_"].strip()
         if tmpcmd != "":
             try:
-                eval("t."+tmpcmd)
+                status = eval("t."+tmpcmd)
+                print(status)
                 tmphistory = window.FindElement('_history_').GetListValues()
                 tmphistory.append(tmpcmd)
                 window.FindElement('_history_').Update(tmphistory)
                 window.FindElement('_command_').Update("")
+                if status is None:
+                    window.FindElement('_status_').Update("执行成功")
+                else:
+                    window.FindElement('_status_').Update(str(status))
             except:
-                pass
+                window.FindElement('_status_').Update("无此命令")
+                # pass
     if event is "执行文件":
         file_name = filedialog.askopenfilename(filetypes=(("小海龟脚本文件","*.psy"),), initialdir ='.') # show the 'get file' dialog box
         print(len(file_name), type(file_name))
