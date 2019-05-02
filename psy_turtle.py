@@ -8,11 +8,11 @@ import tkinter
 
 # menuHistory = ["导出menu", ["导出",]]
 layout = [[sg.Canvas(size=(500, 500), background_color='white', key='_canvas_'),\
-            sg.Listbox(values=["命令历史："], size=(15, 25), key='_history_', bind_return_key=True,)],
+            sg.Listbox(values=["命令历史："], size=(15, 29), key='_history_', bind_return_key=True,)],
                  [sg.InputText(focus=True, size=(67, 3), key='_command_',),], 
-                 [sg.Button("运行",), sg.Button("退出",), sg.T(" "*86), sg.Button("执行文件",)],
-                 [sg.Text("__"*43)],
-                 [sg.Text("运行状态显示～～～",size=(60, 3), font=('宋体', 10), key="_status_")],
+                 [sg.Button("运行",), sg.Button("退出",), sg.T(" "*55), sg.Button("执行文件",)],
+                 [sg.Text("__"*40)],
+                 [sg.Text("运行状态显示～～～",size=(40, 3), font=('宋体', 10), key="_status_")],
                  ]      
 
 window = sg.Window('小海龟绘图', return_keyboard_events=True, font=('宋体', 12)).Layout(layout).Finalize()    
@@ -71,6 +71,13 @@ while True:
         tmpcmd = values["_command_"].strip()
         if tmpcmd != "":
             try:
+                if "(" not in tmpcmd:
+                    tmpcmd = tmpcmd.split(' ')
+                    curcmd = tmpcmd[0] + "("
+                    # print(tmpcmd, curcmd, "======, 1")
+                    curcmd += ",".join(tmpcmd[1:]) + ")"
+                    tmpcmd = curcmd
+                    # print(tmpcmd, curcmd, "~~~~~~~~~~~~2")
                 status = eval("t."+tmpcmd)
                 print(status)
                 tmphistory = window.FindElement('_history_').GetListValues()
