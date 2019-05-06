@@ -4,18 +4,29 @@ import turtle as tt
 import tkinter.font
 from tkinter import filedialog
 import tkinter
+import platform 
+from turtle import *
 
+if platform.system() == "Linux":
+    size_history = (15, 25)
+    size_command = (67, 3)
+    size_blank = 86
+    size_status = (40, 1)
 
-# menuHistory = ["导出menu", ["导出",]]
+outputmenu = ['',['导出为psy文件']]
 layout = [[sg.Canvas(size=(500, 500), background_color='white', key='_canvas_'),\
-            sg.Listbox(values=["命令历史："], size=(15, 29), key='_history_', bind_return_key=True,)],
-                 [sg.InputText(focus=True, size=(67, 3), key='_command_',),], 
-                 [sg.Button("运行",), sg.Button("退出",), sg.T(" "*55), sg.Button("执行文件",)],
-                 [sg.Text("__"*40)],
-                 [sg.Text("运行状态显示～～～",size=(40, 3), font=('宋体', 10), key="_status_")],
-                 ]      
+            sg.Listbox(values=["命令历史："], size=size_history, key='_history_', bind_return_key=True,right_click_menu=outputmenu)],
+            [sg.InputText(focus=True, size=size_command, key='_command_',),], 
+            [sg.Button("运行",), sg.Button("退出",), sg.T(" "*size_blank), sg.Button("执行文件",)],
+            [sg.Text("__"*42)],
+            [sg.Text("运行状态显示～～～",size=size_status, font=('宋体', 10), key="_status_")],
+            ]      
 
 window = sg.Window('小海龟绘图', return_keyboard_events=True, font=('宋体', 12)).Layout(layout).Finalize()    
+
+# 按pixel排列
+# window.FindElement('_canvas_').TKCanvas.place(x=0, y=0, height=500, width=500)l
+
 
 #================= 绑定doubleclick =================================
 # historywindow = window.FindElement('_history_').TKText
@@ -30,6 +41,8 @@ window = sg.Window('小海龟绘图', return_keyboard_events=True, font=('宋体
 
 #================= 绑定return =================================
 # commandwindow = window.FindElement('_command_').TKEntry
+# commandwindow.place(x=0, y=0, height=30, width=650)
+
 # def enterKeyRun(event):
 #     tmpcmd = commandwindow.get().strip()
 #     if tmpcmd != "":
@@ -60,9 +73,16 @@ t = tt.RawTurtle(canvas)
 
 while True:
     event, values = window.Read()
+    # print(event, values)
     if event is None or event == "退出":
         break
     
+    if event is "导出为psy文件":
+        f = filedialog.asksaveasfile(mode='w', filetypes=(("小海龟脚本文件","*.psy"),), initialdir ='.') # show the 'get file' dialog box
+        tmphistory = window.FindElement('_history_').GetListValues()
+        if f is not None:            
+            f.write("t.reset()\nt." + "\nt.".join(tmphistory[1:]))
+        
     if event == "_history_":
         if "命令历史" not in values['_history_'][0]:
             window.FindElement('_command_').Update(values['_history_'][0])
@@ -79,7 +99,7 @@ while True:
                     tmpcmd = curcmd
                     # print(tmpcmd, curcmd, "~~~~~~~~~~~~2")
                 status = eval("t."+tmpcmd)
-                print(status)
+                # print(status)
                 tmphistory = window.FindElement('_history_').GetListValues()
                 tmphistory.append(tmpcmd)
                 window.FindElement('_history_').Update(tmphistory)
