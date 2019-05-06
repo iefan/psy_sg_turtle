@@ -5,13 +5,18 @@ import tkinter.font
 from tkinter import filedialog
 import tkinter
 import platform 
-from turtle import *
 
 if platform.system() == "Linux":
     size_history = (15, 25)
     size_command = (67, 3)
     size_blank = 86
     size_status = (40, 1)
+elif platform.system() == "Windows":
+    size_history = (18, 29)
+    size_command = (82, 3)
+    size_blank = 59
+    size_status = (40, 1)
+
 
 outputmenu = ['',['导出为psy文件']]
 layout = [[sg.Canvas(size=(500, 500), background_color='white', key='_canvas_'),\
@@ -113,7 +118,7 @@ while True:
                 # pass
     if event is "执行文件":
         file_name = filedialog.askopenfilename(filetypes=(("小海龟脚本文件","*.psy"),), initialdir ='.') # show the 'get file' dialog box
-        print(len(file_name), type(file_name))
+        # print(len(file_name), type(file_name))
         strcmd = "from turtle import *\n"
         if len(file_name)==0:
             pass
