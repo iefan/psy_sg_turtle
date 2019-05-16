@@ -1,0 +1,5 @@
+t.reset()
+s.addshape("trident.gif")
+s.getshapes()
+t.shape("trident.gif")
+t.fd(100)
