@@ -130,8 +130,9 @@ while True:
                 elif tmpcmd[:tmpcmd.index("(")] in screenCmdList:
                     tmpcmd = "s."+tmpcmd
                 
+                print(tmpcmd)
                 status = eval(tmpcmd)
-                # print(status)
+                print(status)
 
                 tmphistory = window.FindElement('_history_').GetListValues()
                 tmphistory.append(tmpcmd)
@@ -142,7 +143,7 @@ while True:
                 else:
                     window.FindElement('_status_').Update(str(status))
             except:
-                window.FindElement('_status_').Update("无此命令")
+                window.FindElement('_status_').Update("无此命令或命令需要带参数")
 
         # if tmpcmdTs != "":
         #     try:
@@ -176,6 +177,9 @@ while True:
         else:
             with open(file_name) as f:
                 strcmd += f.read()
-            exec(strcmd, {}, {'t':t, 's':s})
+            try:
+                exec(strcmd, {}, {'t':t, 's':s})
+            except:
+                window.FindElement('_status_').Update("未正确执行，请检查脚本！")
 
 window.Close()
