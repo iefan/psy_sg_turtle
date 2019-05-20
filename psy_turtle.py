@@ -18,7 +18,7 @@ elif platform.system() == "Windows":
     size_status = (80, 1)
 
 
-outputmenu = ['',['导出为psy文件']]
+outputmenu = ['',['导出为psy文件', "清空当前历史"]]
 layout = [[sg.Canvas(size=(500, 500), background_color='white', key='_canvas_'),\
             sg.Listbox(values=["命令历史："], size=size_history, key='_history_', bind_return_key=True,right_click_menu=outputmenu)],
             [sg.T("绘图命令："), sg.InputText(focus=True, size=size_command, key='_command_',),], 
@@ -99,7 +99,10 @@ while True:
     # print(event, values)
     if event is None or event == "退出":
         break
-    
+
+    if event is "清空当前历史":
+        window.FindElement('_history_').Update(["命令历史："])
+
     if event is "导出为psy文件":
         f = filedialog.asksaveasfile(mode='w', filetypes=(("小海龟脚本文件","*.psy"),), initialdir ='.') # show the 'get file' dialog box
         tmphistory = window.FindElement('_history_').GetListValues()

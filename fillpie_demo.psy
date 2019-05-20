@@ -1,0 +1,8 @@
+t.reset()
+t.reset()
+t.color('blue', 'red')
+t.begin_fill()
+t.circle(50,90)
+t.goto(0,50)
+t.home()
+t.end_fill()

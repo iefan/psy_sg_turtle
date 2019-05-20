@@ -1,0 +1,7 @@
+t.reset()
+t.clear()
+t.reset()
+t.write("Python 小海龟是最可爱的!")
+t.up()
+t.goto(0,60)
+t.write("Python 小海龟是最可爱的！", move=True,  align="center", font=("宋体", 14, "bold"))
