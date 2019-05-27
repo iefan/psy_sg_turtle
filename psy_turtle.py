@@ -122,6 +122,8 @@ while True:
             try:
                 if "(" not in tmpcmd:
                     tmpcmd = tmpcmd.split(' ')
+                    while '' in tmpcmd:
+                        tmpcmd.remove('')
                     curcmd = tmpcmd[0] + "("
                     # print(tmpcmd, curcmd, "======, 1")
                     curcmd += ",".join(tmpcmd[1:]) + ")"

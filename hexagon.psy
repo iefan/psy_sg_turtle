@@ -1,0 +1,16 @@
+from random import randint
+
+t.reset()
+t.pencolor("green")
+s.colormode(255)
+t.pensize(3)
+t.setheading(180)
+for __ in range(10): 
+    for _ in range(6):
+        t.color(randint(1,255),randint(1,255),randint(1,255))
+        t.fd(60)
+        t.rt(60)
+    t.lt(36)
+
+
+

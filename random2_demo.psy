@@ -1,0 +1,18 @@
+from random import randint
+t.reset()
+width = s.window_width()
+height = s.window_height()
+(minX, maxX) = (-(width / 2), width / 2)
+(minY, maxY) = (-(height / 2), height / 2)
+(x, y) = t.position()
+while x > minX and y > minY and x < maxX and y < maxY:
+    distance = randint(10, 60)
+    t.fd(distance)
+    degrees = randint(45, 135)
+    if randint(1, 2) == 1:
+        t.lt(degrees)
+    else:
+        t.rt(degrees)
+    (x, y) = t.position()
+t.pu()
+t.home()

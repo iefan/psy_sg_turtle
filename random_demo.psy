@@ -1,0 +1,11 @@
+from random import randint
+t.reset()
+#t.goto(-250, 10)
+for _ in range(20):
+    distance = randint(10, 80)
+    t.fd(distance)
+    degrees = randint(45, 135)
+    if randint(1,2) == 1:
+        t.lt(degrees)
+    else:
+        t.rt(degrees)

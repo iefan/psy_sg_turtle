@@ -1,0 +1,24 @@
+t.reset()
+t.showturtle()
+t.speed(0)
+t.pu()
+t.goto(0, 100)
+t.pd()
+t.shape("turtle")
+for _ in range(360):
+    t.fd(1)
+    t.lt(1)
+
+
+t.pu()
+t.goto(0, -200)
+t.pd()
+degrees = 1
+distance = 5
+for _ in range(450):
+    degrees += 0.02
+    distance -= 0.01
+    t.fd(distance)
+    t.lt(degrees)
+
+t.hideturtle()
