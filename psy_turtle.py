@@ -178,7 +178,7 @@ while True:
         if len(file_name)==0:
             pass
         else:
-            with open(file_name) as f:
+            with open(file_name, encoding='UTF-8') as f:
                 strcmd += f.read()
             try:
                 exec(strcmd, {}, {'t':t, 's':s})
