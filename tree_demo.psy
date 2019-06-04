@@ -1,0 +1,48 @@
+#from turtle import *
+
+t.reset()
+t.speed(0)
+t.pu()
+t.goto(0,-200)
+t.lt(90)
+s.colormode(255)
+tree_leaf = 40
+turn_angle = 13
+
+def drawTree(n):
+    if n == 0:
+        return
+    t.color(255//(n+1), 255//(n+1), 0)
+    # 绘制一个二叉
+    t.lt(turn_angle)
+    t.pd()
+    t.fd(tree_leaf)  
+    t.pu() 
+    t.bk(tree_leaf)
+    t.rt(turn_angle*2) 
+    t.pd()   
+    t.fd(tree_leaf) 
+    t.pu()   
+    t.bk(tree_leaf)
+    t.lt(turn_angle)   
+
+    # 来到二叉的左支
+    t.lt(turn_angle)
+    t.pu()
+    t.fd(tree_leaf)
+    #drawTree(n-1) 
+    t.pu()
+    t.bk(tree_leaf)
+    t.rt(turn_angle)
+
+    # 来到二叉的右支进行绘制
+    t.rt(turn_angle)
+    t.pu()
+    t.fd(tree_leaf)
+    #drawTree(n-1)
+    t.pu()
+    t.bk(tree_leaf)
+    t.lt(turn_angle)
+       
+
+drawTree(6)
