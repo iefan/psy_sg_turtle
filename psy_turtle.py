@@ -183,11 +183,11 @@ while True:
             pass
         else:
             with open(file_name, encoding='UTF-8') as f:
-                strcmd += f.read()
-            print(strcmd)
+                strcmd += f.read()                        
             try:
-                exec(strcmd, {'t':t, 's':s}, {'t':t, 's':s})
-            except:
-                window.FindElement('_status_').Update("未正确执行，请检查脚本！")
+                exec(strcmd, {'t':t, 's':s}, {})
+                window.FindElement('_status_').Update("脚本执行成功！")
+            except Exception as e:
+                window.FindElement('_status_').Update(e)
 
 window.Close()
