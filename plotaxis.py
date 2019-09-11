@@ -1,0 +1,17 @@
+import turtle as tt 
+
+tt.reset()
+tt.up()
+tt.goto(-200,0)
+tt.pd()
+tt.goto(200,0)
+tt.stamp()
+tt.pu()
+tt.goto(0, -200)
+tt.pd()
+tt.goto(0, 200)
+tt.left(90)
+tt.stamp()
+tt.pu()
+tt.goto(0,0)
+print(tt.textinput("请输入坐标，以空格分开", "坐标"))
