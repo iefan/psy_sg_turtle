@@ -1,0 +1,125 @@
+from random import randint
+gap = 22
+shortline = 5
+s.colormode(255)
+# the "canvasx" and "canvasy" methods will translate the position onscreen 
+# (which bind is reporting) into the actual point on the canvas, taking into 
+# account scrolling. If you're adding these directly to the event bindings 
+# (as opposed to procedures called from the event bindings), be careful about
+#  quoting and substitutions, to make sure that the conversions are done when
+#  the event fires.
+
+def onClickPos(self, fun, add=None):
+    if fun is None:
+        self.cv.unbind('<Button-1>')
+    else:
+        def eventfun(event):
+            print(self.xscale, self.cv.canvasx(event.x), event.x, self.cv.canvasx(event.x) / self.xscale)
+            fun(self.cv.canvasx(event.x) / self.xscale, -self.cv.canvasy(event.y) / self.yscale)
+        self.cv.bind('<Button-1>', eventfun, add)
+
+def goto_handler(x, y):
+    global onClickPos, goto_handler, t, gap, randint
+    onClickPos(s, None)
+    t.pu()
+    t.pencolor(randint(1,200),randint(1,200),randint(1,200))
+    t.setheading(t.towards(x, y))
+    t.goto(x, y)
+    t.st()
+    t.dot()
+    t.write("(" + str(round(x/gap,1)) + "," + str(round(y/gap,1))+")")
+    t.ht()
+    onClickPos(s, goto_handler)
+
+onClickPos(s, goto_handler)
+
+t.reset()
+t.pu()
+t.goto(-240,0)
+t.pd()
+t.goto(240,0)
+t.stamp()
+t.pu()
+t.goto(0,-240)
+t.lt(90)
+t.pd()
+t.goto(0,240)
+t.stamp()
+t.pu()
+t.goto(0,0)
+t.dot()
+t.goto(5,-10)
+t.write('o')
+t.goto(240,20)
+t.write('x')
+t.goto(20,240)
+t.write('y')
+
+for i in range(1, 11):
+    t.goto(gap*i, 0)
+    t.pd()
+    t.goto(gap*i, shortline)
+    t.pu()
+    t.goto(gap*i, -(gap-2))
+    t.write(i)
+
+    t.goto(-1*gap*i, 0)
+    t.pd()
+    t.goto(-1*gap*i, shortline)
+    t.pu()
+    t.goto(-1*gap*i-3, -(gap-2))
+    t.write(-i)
+
+    t.goto(0, gap*i)
+    t.pd()
+    t.goto(shortline, gap*i)
+    t.pu()
+    t.goto(-(gap-6), gap*i-4)
+    t.write(i)
+
+    t.goto(0, -1*gap*i)
+    t.pd()
+    t.goto(shortline, -1*gap*i)
+    t.pu()
+    t.goto(-(gap-6), -1*gap*i-6)
+    t.write(-i)
+
+#t.ht()
+t.pu()
+t.goto(0,0)
+t.setheading(0)
+
+runstep = list(range(1,6))
+runstep.extend(runstep.copy())
+runstep.sort()
+t.pencolor(255,0,0)
+t.pd()
+icount = 0
+for i in runstep:
+    # tmpstep = i*gap
+    while i!=0:
+        # if icount>441:
+        #     break
+        icount += 1
+        t.pencolor(255,0,0)
+        t.fd(gap)
+        t.dot()
+        t.pencolor(0,0,255)
+        i -= 1
+        t.write(str(icount+1))
+    t.lt(90)
+        
+# while True:
+#     zuobiao = s.textinput("提示", "请输入坐标，以','分开, 'quit'退出")
+#     if zuobiao.lower() == 'quit':
+#         break
+#     #t.st()
+#     pos_x,pos_y = zuobiao.split(",")
+#     t.pu()
+#     t.goto(eval(pos_x)*gap, eval(pos_y)*gap)
+#     t.pencolor(randint(1,200),randint(1,200),randint(1,200))
+#     t.dot()
+#     #t.goto(eval(pos_x)*gap-10, eval(pos_y)*gap-15)
+#     t.write("("+zuobiao+")")
+#     #t.ht()
+

@@ -5,6 +5,7 @@ import tkinter.font
 from tkinter import filedialog
 import tkinter
 import platform 
+import traceback
 
 if platform.system() == "Linux":
     size_history = (15, 25)
@@ -108,6 +109,7 @@ while True:
         tmphistory = window.FindElement('_history_').GetListValues()
         if f is not None:            
             f.write("t.reset()\n" + "\n".join(tmphistory[1:]))
+            f.close()
         
     if event == "_history_":
         # print(values['_history_'])
@@ -135,9 +137,9 @@ while True:
                 elif tmpcmd[:tmpcmd.index("(")] in screenCmdList:
                     tmpcmd = "s."+tmpcmd
                 
-                print(tmpcmd)
+                # print(tmpcmd)
                 status = eval(tmpcmd)
-                print(status)
+                # print(status)
 
                 tmphistory = window.FindElement('_history_').GetListValues()
                 tmphistory.append(tmpcmd)
@@ -148,8 +150,8 @@ while True:
                 else:
                     window.FindElement('_status_').Update(str(status))
             except:
-                window.FindElement('_status_').Update("无此命令或命令需要带参数")
-
+                window.FindElement('_status_').Update("未正确执行："+traceback.format_exc())
+        
         # if tmpcmdTs != "":
         #     try:
         #         if "(" not in tmpcmdTs:
@@ -176,15 +178,20 @@ while True:
     if event is "执行文件":
         file_name = filedialog.askopenfilename(filetypes=(("小海龟脚本文件","*.psy"),), initialdir ='.') # show the 'get file' dialog box
         # print(len(file_name), type(file_name))
+        window.FindElement('_status_').Update("")
         strcmd = "from turtle import *\n"
         if len(file_name)==0:
             pass
         else:
             with open(file_name, encoding='UTF-8') as f:
                 strcmd += f.read()
+            # print(strcmd)
             try:
-                exec(strcmd, {}, {'t':t, 's':s})
+                # exec(strcmd, {}, {'t':t, 's':s})
+                # exec(strcmd, {'t':t, 's':s, 'tt':tt, 'canvas':canvas}, {})
+                exec(strcmd, {'t':t, 's':s}, {})
             except:
-                window.FindElement('_status_').Update("未正确执行，请检查脚本！")
+                traceback.print_exc()
+                window.FindElement('_status_').Update("未正确执行:！" + traceback.format_exc())
 
 window.Close()

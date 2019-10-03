@@ -1,0 +1,38 @@
+t.reset()
+
+dipan_width = 130
+dipan_height = 30
+zhuzi_width = 20
+zhuzi_height = 200
+for i in range(3):
+    t.pu()
+    t.pencolor('blue')
+    t.fillcolor("orange")
+    t.goto(-220+i*(dipan_width+30),-160)
+    t.pd()
+    t.begin_fill()
+    t.fd(dipan_width)
+    t.lt(90)
+    t.fd(dipan_height)
+    t.lt(90)
+    t.fd(dipan_width)
+    t.lt(90)
+    t.fd(dipan_height)
+    t.lt(90)
+    t.end_fill()
+
+    t.pu()
+    t.goto(-220+i*(dipan_width+30)+dipan_width//2-zhuzi_width//2,-160+dipan_height)
+    t.pencolor('green')
+    t.fillcolor("pink")
+    t.pd()
+    t.begin_fill()
+    t.fd(zhuzi_width)
+    t.lt(90)
+    t.fd(zhuzi_height)
+    t.lt(90)
+    t.fd(zhuzi_width)
+    t.lt(90)
+    t.fd(zhuzi_height)
+    t.lt(90)
+    t.end_fill()

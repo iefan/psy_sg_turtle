@@ -1,0 +1,74 @@
+t.reset()
+radius = 20
+
+t.ht()
+t.pencolor('blue')
+t.fillcolor('yellow')
+t.pu()
+t.sety(-radius)
+t.pd()
+t.begin_poly()
+t.begin_fill()
+t.circle(radius)
+t.end_fill()
+t.end_poly()
+s.addshape('psy', t.get_poly())
+t.clear()
+
+t.shape("psy")
+# t.shape('classic')
+t.st()
+t.speed(1)
+
+# t1 = tt.RawTurtle(canvas)
+# t1.reset()
+# s1 = t1.getscreen()
+# s1.resetscreen()
+# t1.ht()
+# t1.clear()
+# t1.shape("psy")
+# t1.st()
+# t1.color('green')
+
+t.pu()
+def moveTurtle(t):
+    global radius
+    icount = 0
+    t.setheading(30)
+    bottomEdge = 250-radius
+    while icount<20:
+        t.fd(10)
+        if t.xcor()>bottomEdge:  ##右边
+            # print(t.heading())
+            if t.heading()>=0 and t.heading()<=90:
+                t.lt(2*(90-t.heading()))
+            elif t.heading()>=270 and t.heading()<=360:
+                t.rt(2*(t.heading()-270))
+            icount += 1
+
+        if t.xcor()<-bottomEdge:  ##左边
+            # print(t.heading())
+            if t.heading()>=90 and t.heading()<=180:
+                t.rt(2*(t.heading()-90))
+            elif t.heading()>=180 and t.heading()<=270:
+                t.lt(2*(270-t.heading()))
+            icount += 1
+
+        if t.ycor()>bottomEdge:  ##上边
+            # print(t.heading())
+            if t.heading()>=0 and t.heading()<=90:
+                t.rt(2*t.heading())
+            elif t.heading()>=90 and t.heading()<=180:
+                t.lt(2*(180-t.heading()))
+            icount += 1
+
+        if t.ycor()<-bottomEdge:  ##下边
+            # print(t.heading())
+            if t.heading()>=180 and t.heading()<=270:
+                t.rt(2*(t.heading()-180))
+            elif t.heading()>=270 and t.heading()<=360:
+                t.lt(2*(360-t.heading()))
+            icount += 1
+moveTurtle(t)
+# moveTurtle(t1)
+# t.fd(100)
