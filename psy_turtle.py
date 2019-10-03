@@ -8,15 +8,17 @@ import platform
 import traceback
 
 if platform.system() == "Linux":
-    size_history = (15, 25)
-    size_command = (58, 3)
-    size_blank = 86
-    size_status = (80, 1)
+    size_history = (15, 28)
+    size_command = (68, 3)
+    size_blank = 50
+    size_status = (70, 1)
+    size_sep = 40
 elif platform.system() == "Windows":
     size_history = (18, 29)
     size_command = (72, 3)
     size_blank = 59
     size_status = (80, 1)
+    size_sep = 42
 
 
 outputmenu = ['',['导出为psy文件', "清空当前历史"]]
@@ -25,7 +27,7 @@ layout = [[sg.Canvas(size=(500, 500), background_color='white', key='_canvas_'),
             [sg.T("绘图命令："), sg.InputText(focus=True, size=size_command, key='_command_',),], 
             # [sg.T("背景命令："), sg.InputText(size=size_command, key='_commandTs_',),], 
             [sg.Button("运行",), sg.Button("退出",), sg.T(" "*size_blank), sg.Button("执行文件",)],
-            [sg.Text("__"*42)],
+            [sg.Text("__"*size_sep)],
             [sg.Text("运行状态显示～～～",size=size_status, font=('宋体', 10), key="_status_")],
             ]      
 
